@@ -1,3 +1,4 @@
+// Set.prototype.getByIndex = function (index) { return [...this][index]; }
 const borderPosition = document.querySelectorAll('[data-cell]');
 
 const X_CLASS = 'x'
@@ -5,24 +6,23 @@ const O_CLASS = 'o'
 var playerTurn = true;
 
 // var AIBoard = []
-var AIBoard =new Set()
+var AIBoard = ['','','','','','','','','']
 
 const gameLoop = borderPosition.forEach(cell => {
     cell.addEventListener('click', (e) => {
-        console.log("hi");
         place(e);
     }); // once mean only you can click one time
 });
 function place(e) {
-   
-       const cell = e.target;
+
+    const cell = e.target;
     if (cell.classList.contains("placed")) return
     cell.classList.add("placed")
     DrawCounter++;
     whoIsPLaying();
     swapTurns();
     whoIsTurn();
-    AIBoard.add(cell.id)
+    AIBoard[cell.id-1]='x'
     console.log(AIBoard);
 
     cell.classList.add(currentClass) // display player shape
@@ -40,28 +40,21 @@ function place(e) {
         return
 
     }
-    console.log("twiiiiis");
-    const AICellChoice =borderPosition[random()]
-     if(!playerTurn) placeAI(AICellChoice)
+    const AICellChoice = borderPosition[bestMove()]
+    if (!playerTurn) placeAI(AICellChoice)
+    
 }
 
 
 function placeAI(AI) {
     AI.classList.add("placed")
-
-    console.log("stop 4");
-console.log(playerTurn);
     let cell = AI
     DrawCounter++;
     whoIsPLaying();
     swapTurns();
     whoIsTurn();
-    console.log("stop 3");
-    AIBoard.add(cell.id)
-    console.log(AIBoard);
+    AIBoard[cell.id-1]='o'
     cell.classList.add(currentClass) // display player shape
-
-    console.log("stop 2");
 
     if (checkWin()) {
         // winner text
@@ -74,8 +67,6 @@ console.log(playerTurn);
         displaywinierText();
         return
     }
-    console.log(DrawCounter);
-    console.log("stop 1");
 
 }
 
@@ -109,6 +100,7 @@ function checkWin() {
     })
 
 }
+
 const winChances = [
     [0, 1, 2],
     [3, 4, 5],
@@ -165,19 +157,42 @@ function restart() {
         swapTurns();
         whoIsTurn();
         DrawCounter = 0;
-        AIBoard =new Set()
+        AIBoard = ['','','','','','','','','']
     })
 }
 
 let DrawCounter = 0;
-
-
 function random() {
     let number
     do {
-    number = (Math.floor(Math.random() * 9)+1)
-    } while (AIBoard.has(number+''));
-    return number-1
+    number = (Math.floor(Math.random() * 8)+1)
+    } while (AIBoard[number]!=='');
+    return number
+}
+
+function bestMove() {
+let bestScore = -Infinity;
+let move
+    for (let i = 0; i < AIBoard.length; i++) {
+        if (AIBoard[i]==='') {
+            AIBoard[i]='o'
+            let score = minMax(AIBoard)
+            AIBoard[i]=''
+            if(score>bestScore){
+                bestScore=score
+                move=i
+            }
+        } 
+        
+ 
+
+    }
+    return move
+
+}
+function minMax(board,depth,isMaximizing){
+    // if(checkWin())
+    return 1
 }
 
 
