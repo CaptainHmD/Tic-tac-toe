@@ -93,9 +93,9 @@ const winChances=[
 const playerTurnTxt = document.querySelector('.player-turn-now');
 const whoIsPLaying  = ()=>{
       if (!playerTurn) {
-        playerTurnTxt.innerHTML ='Player *<span class="x-color-text"> X </span>* Turn';
+        playerTurnTxt.innerHTML ='Player *<span class="x-color-text"> X </span>* Turn &#8203 &#8203';
       } else {
-        playerTurnTxt.innerHTML ='Player *<span class="o-color-text"> O </span>* Turn';
+        playerTurnTxt.innerHTML ='Player *<span class="o-color-text"> O </span>* Turn &#8203 &#8203';
 
       }
 }

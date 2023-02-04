@@ -164,6 +164,11 @@ body , html{
     font-size: 3rem !important;
     font-weight: bold;
   }
+  /* .player-turn-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } */
 
 .wining-message{
   position: fixed;
